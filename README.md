@@ -9,6 +9,7 @@ Made with:
 
 ## Contents
 
+### CDS.security
 1. [How it works](#how-it-works)
 2. [How to run it](#how-to-run-it)
    - [Settings](#settings)
@@ -24,8 +25,17 @@ Made with:
    - [Secrets](#secrets)
    - [Known limitations](#known-limitations)
 8. [Screenshots](#screenshots)
-9. [Assignment requirements](#assignment-requirements)
-10. [Glossary](#glossary)
+9. [Glossary](#glossary)
+
+### CDS.infrastructure
+
+[TODO]
+
+### Final Reflection
+
+[TODO]
+
+# CD.security
 
 ## How it works
 
@@ -299,3 +309,12 @@ The JWT key and the password for the first users live in `.env`, which is listed
 | Hash           | A scrambled version of a password that can't be turned back                   |
 | Salt           | Random data added to a password before hashing                                |
 | Container      | A small, separate environment that runs one program with everything it needs  |
+
+
+## CDS.infrastructure
+
+[TODO]
+
+## Final reflection
+
+[TODO]
