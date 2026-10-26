@@ -1,0 +1,16 @@
+// Settings for the TypeScript type checker (run with "bun run typecheck").
+// Bun runs the code itself, so TypeScript only checks for mistakes.
+{
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"], // Allow modern JavaScript and browser features
+    "target": "ESNext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx", // Allow React's HTML-like syntax in .tsx files
+    "types": ["bun"],
+    "strict": true, // Catch as many mistakes as possible
+    "noEmit": true, // Only check, don't create any files
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}

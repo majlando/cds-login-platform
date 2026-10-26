@@ -1,0 +1,30 @@
+# Docker Compose starts both containers with one command: docker compose up -d --build
+# Values like ${JWT_KEY} are read from the .env file.
+name: cds-login-platform
+
+services:
+  # The website (React + Bun)
+  client:
+    build: ./client
+    environment:
+      API_URL: http://server:8080 # Inside Docker, the backend is reached by its service name "server"
+    ports:
+      - "8001:8001" # Open http://localhost:8001 in the browser
+
+  # The backend (C# .NET)
+  server:
+    build: ./server
+    environment:
+      # ":?" makes Docker stop with an error if the value is missing from .env
+      # The double underscore "__" means a nested setting, so Jwt__Key becomes Jwt:Key in C#
+      Jwt__Key: ${JWT_KEY:?Set JWT_KEY in .env}
+      # ":-" gives a default value when the setting is missing from .env
+      Seed__Password: ${SEED_PASSWORD:-password}
+      Seed__Users: ${SEED_USERS:-true}
+      ConnectionStrings__Default: Data Source=/data/app.db
+    volumes:
+      - db:/data # Keeps the database when the container is restarted or rebuilt
+    # No "ports" here: the backend can only be reached through the client
+
+volumes:
+  db:

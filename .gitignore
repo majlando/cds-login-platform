@@ -1,0 +1,5 @@
+bin/
+obj/
+*.db
+node_modules/
+.env
