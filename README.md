@@ -18,7 +18,6 @@ Made with:
 6. [Project structure](#project-structure)
 7. [Security decisions](#security-decisions)
 8. [Screenshots](#screenshots)
-9. [Glossary](#glossary)
 
 ### *CDS.infrastructure*
 
