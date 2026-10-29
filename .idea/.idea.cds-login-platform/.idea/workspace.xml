@@ -14,14 +14,19 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9429a093-08c0-402e-8f1a-dc87e164c660" name="Changes" comment="" />
+    <list default="true" id="9429a093-08c0-402e-8f1a-dc87e164c660" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README-final-reflection.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README-infrastructure.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="1" />
+    <option name="cachedIndexableFilesCount" value="17" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -37,66 +42,69 @@
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
       <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.000000000000011" />
-      <entry key="S2" value="1.0003336391338733" />
-      <entry key="S5" value="1.0546031482605138" />
-      <entry key="S10" value="1.3732698750629257" />
-      <entry key="S30" value="3.1452892778973527" />
-      <entry key="S60" value="6.584395797464814" />
-      <entry key="M2" value="14.25112719086138" />
-      <entry key="M5" value="32.68058742597927" />
-      <entry key="M10" value="57.31608484180799" />
-      <entry key="M15" value="77.10464805877723" />
-      <entry key="M30" value="113.16069972174242" />
-      <entry key="H1" value="142.3765800393492" />
-      <entry key="H2" value="161.3096212353596" />
-      <entry key="H4" value="172.13596708079385" />
-      <entry key="D1" value="181.9459715987777" />
-      <entry key="W1" value="183.7046255694148" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.000000228188107" />
+      <entry key="S5" value="1.0050133230515512" />
+      <entry key="S10" value="1.1608722496945505" />
+      <entry key="S30" value="3.5603139057358932" />
+      <entry key="S60" value="8.659627282507087" />
+      <entry key="M2" value="19.4007158474551" />
+      <entry key="M5" value="44.95021911263313" />
+      <entry key="M10" value="75.25530249527334" />
+      <entry key="M15" value="98.28756283563801" />
+      <entry key="M30" value="140.38952715614687" />
+      <entry key="H1" value="175.2036048398391" />
+      <entry key="H2" value="198.13884573927962" />
+      <entry key="H4" value="211.38265197535767" />
+      <entry key="D1" value="223.4616373433158" />
+      <entry key="W1" value="225.6347819898231" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
-      <entry key="MS500" value="5.4E-323" />
-      <entry key="S2" value="2.7276824248604968E-81" />
-      <entry key="S5" value="5.947268174617658E-33" />
-      <entry key="S10" value="7.711853327584534E-17" />
-      <entry key="S30" value="4.25650277008773E-6" />
-      <entry key="S60" value="0.002063129363391384" />
-      <entry key="M2" value="0.04542168384583931" />
-      <entry key="M5" value="0.2903389434156425" />
-      <entry key="M10" value="0.5388310898747797" />
-      <entry key="M15" value="0.6621683682393149" />
-      <entry key="M30" value="0.8137372845331077" />
-      <entry key="H1" value="0.9020738797532655" />
-      <entry key="H2" value="0.9497756997066543" />
-      <entry key="H4" value="0.9745643640656332" />
-      <entry key="D1" value="0.9957150875598192" />
-      <entry key="W1" value="0.9993867425497804" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="4.6605876055362483E-125" />
+      <entry key="S5" value="1.8508715093862824E-50" />
+      <entry key="S10" value="1.3604673863736259E-25" />
+      <entry key="S30" value="5.1431522226565504E-9" />
+      <entry key="S60" value="7.171577387616032E-5" />
+      <entry key="M2" value="0.008468516627849306" />
+      <entry key="M5" value="0.1482937808112988" />
+      <entry key="M10" value="0.3850893153689143" />
+      <entry key="M15" value="0.5293070102893809" />
+      <entry key="M30" value="0.7275348859603792" />
+      <entry key="H1" value="0.8529565557285902" />
+      <entry key="H2" value="0.9235564713262471" />
+      <entry key="H4" value="0.961018455247475" />
+      <entry key="D1" value="0.993394965439838" />
+      <entry key="W1" value="0.999053741652098" />
     </decayedSelected>
     <decayedShown>
       <entry key="MS100" value="0.9460576467255959" />
-      <entry key="MS500" value="0.9889709163809425" />
-      <entry key="S2" value="0.9975637315595809" />
-      <entry key="S5" value="1.0534166891743888" />
-      <entry key="S10" value="1.3724439299937001" />
-      <entry key="S30" value="3.14459150329047" />
-      <entry key="S60" value="6.585584574008228" />
-      <entry key="M2" value="14.294276159999026" />
-      <entry key="M5" value="32.96627605577863" />
-      <entry key="M10" value="57.85051942689912" />
-      <entry key="M15" value="77.76310840462018" />
-      <entry key="M30" value="113.972041620286" />
-      <entry key="H1" value="143.27727724739844" />
-      <entry key="H2" value="162.2586563217404" />
-      <entry key="H4" value="173.11014694621574" />
-      <entry key="D1" value="182.94162052671768" />
-      <entry key="W1" value="184.70400280828784" />
+      <entry key="MS500" value="0.9889709163809315" />
+      <entry key="S2" value="0.9972314790864316" />
+      <entry key="S5" value="1.0039009532110674" />
+      <entry key="S10" value="1.1602509232673353" />
+      <entry key="S30" value="3.559523246649926" />
+      <entry key="S60" value="8.65742359292724" />
+      <entry key="M2" value="19.40498453819748" />
+      <entry key="M5" value="45.09282488750439" />
+      <entry key="M10" value="75.63508412368122" />
+      <entry key="M15" value="98.8123262412104" />
+      <entry key="M30" value="141.11405607830642" />
+      <entry key="H1" value="176.05480754010998" />
+      <entry key="H2" value="199.06145079951958" />
+      <entry key="H4" value="212.34317433914634" />
+      <entry key="D1" value="224.45494662907666" />
+      <entry key="W1" value="226.63382341581365" />
     </decayedShown>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="3LFJZ3LpZscIUlkheldQWR5Q2iL" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -107,6 +115,7 @@
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "cidr.known.project.marker": "true",
@@ -163,7 +172,10 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
     <configuration name="server/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
