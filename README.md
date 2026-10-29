@@ -7,7 +7,7 @@ Made with:
 - **C# .NET** 
 - **Docker**
 
-## Contents
+## Table of Contents
 
 ### CDS.security
 1. [How it works](#how-it-works)
@@ -66,7 +66,6 @@ docker compose up -d --build
 docker compose down      # stop
 ```
 
-**To stop and delete the database**
 ```bash
 docker compose down -v   # stop and delete the database
 ```
@@ -121,12 +120,6 @@ bun run dev
 
 ## API
 
-HTTP methods:
-- `POST` Create
-- `GET` Read
-- `PUT` Update
-- `DELETE` Delete
-
 **Endpoints**
 
 | Method   | Endpoint          | What it does   | Who can use it   |
@@ -137,9 +130,7 @@ HTTP methods:
 | `PUT`    | `/api/users/{id}` | Update user    | SuperUser, Admin |
 | `DELETE` | `/api/users/{id}` | Delete user    | SuperUser, Admin |
 
-You can try it from the terminal while the app is running in Docker (without Docker, use port 3000):
-
-To test the API, you can use `curl` or a browser.
+To test the API, you can use `curl` or the browser.
 
 Use port 3000 when not using Docker.
 
@@ -149,21 +140,9 @@ curl -X POST http://localhost:8001/api/login \
   -H "Content-Type: application/json" \
   -d '{"username": "admin", "password": "password"}'
 
-# Without a token the server answers 401 Unauthorized
+# Without a token (401 Unauthorized)
 curl -i http://localhost:8001/api/users
 ```
-
-**Status code**
-
-| Code  | Meaning                                                        |
-|-------|----------------------------------------------------------------|
-| `200` | OK                                                             |
-| `204` | OK      |
-| `400` | Bad request           |
-| `401` | Unauthorized   |
-| `403` | Forbidden |
-| `404` | Not found                             |
-| `409` | Conflict                         |
 
 ## Project structure
 
@@ -217,32 +196,37 @@ The Token is signed with **HMAC-SHA256**
 - [`AuthController.cs`](server/Controllers/AuthController.cs) (create the token)
 - [`Program.cs`](server/Program.cs) (check the token).
 
-### Authorization: what are you allowed to do?
+### Authorization
 
-The server reads the role from the token on every request. You can see this in [`UsersController.cs`](server/Controllers/UsersController.cs):
+The server reads the role from the token on every request. 
 
-- `[Authorize]` means you must be logged in. All roles can read users.
-- `[Authorize(Roles = "SuperUser,Admin")]` means only those roles can create, update and delete.
-- `CanManage` adds one more rule: a SuperUser can only manage users with the User role. This stops a SuperUser from creating Admins or giving someone a higher role.
+You can see this in [`UsersController.cs`](server/Controllers/UsersController.cs)
+
+- `[Authorize]` means you must be logged in.
+- `[Authorize(Roles = "SuperUser,Admin")]` only these roles can create, update and delete.
+- `CanManage` adds another rule: a SuperUser can only manage users with the User role. 
 
 ### Passwords
 
-- Passwords are **never stored in plaintext** (as they were typed). We only store a **hash**: a scrambled version that can't be turned back into the password.
-- We use ASP.NET Core's built-in `PasswordHasher`. It uses an algorithm called **PBKDF2** (with HMAC-SHA512), which hashes the password 100,000 times, together with a random **salt**:
-  - Hashing 100,000 times makes it slow on purpose. If an attacker steals the database, guessing passwords takes a very long time.
-  - The salt is random data added to each password before hashing. Two users with the same password still get different hashes.
-- When someone logs in, the typed password is hashed the same way and compared to the stored hash.
-- The API never sends password hashes to the browser.
+- Passwords are never stored as plaintext We only store a **hash**.
+- We use ASP.NET Core's built-in `PasswordHasher`. It uses an algorithm called **PBKDF2** (with HMAC-SHA512) together with a random **salt**:
+  - Hashing 100,000 times makes it slow on purpose. Guessing passwords takes a very long time.
+  - Salt is random data added to each password before hashing. Two users with the same password still get different hashes.
+- When someone logs in, the password is compared with stored hash.
 
-All five users have the same password, but every hash is different.
+Even if all five users have the same password, every hash will be different.
 
 ### Secrets
 
-The JWT key and the password for the first users live in `.env`, which is listed in `.gitignore` so it is never committed to git. [`.env.example`](.env.example) shows which values are needed.
+The JWT key and the password for the first users live in `.env`.
+
+`.env` is in `.gitignore` so it is never committed to git.
+
+[`.env.example`](.env.example) shows an example `.env`.
 
 ### Known limitations
 
-- The Docker setup uses plain HTTP. On a real server it must use HTTPS, so passwords and tokens can't be read by others on the network.
+- The Docker setup uses plain HTTP. On a real server we would use HTTPS, so that password and tokens can't be read by others on the network.
 - A JWT can't be cancelled. If a user is deleted, their token still works until it expires (at most 1 hour).
 
 ## Screenshots
@@ -255,13 +239,13 @@ The JWT key and the password for the first users live in `.env`, which is listed
     </td>
     <td width="50%" valign="top">
       <img src="docs/screenshots/02-wrong-password.png" alt="Wrong password" />
-      <p><b>Wrong password.</b> The same message is shown whether the username or the password is wrong.</p>
+      <p><b>Wrong password.</b> A message is shown if the username or the password is wrong.</p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <img src="docs/screenshots/03-admin.png" alt="Admin view" />
-      <p><b>Logged in as Admin.</b> An Admin can create users with any role, and can edit and delete everyone.</p>
+      <p><b>Logged in as Admin.</b> An Admin can create, edit or delete any user.</p>
     </td>
     <td width="50%" valign="top">
       <img src="docs/screenshots/04-admin-edit.png" alt="Admin editing a user" />
@@ -271,35 +255,20 @@ The JWT key and the password for the first users live in `.env`, which is listed
   <tr>
     <td width="50%" valign="top">
       <img src="docs/screenshots/05-superuser.png" alt="SuperUser view" />
-      <p><b>Logged in as SuperUser.</b> A SuperUser can only create, edit and delete users with the User role. There are no buttons for the Admin and the SuperUsers, and "User" is the only role in the dropdown.</p>
+      <p><b>Logged in as SuperUser.</b> A SuperUser can only create, edit or delete users with the User role.</p>
     </td>
     <td width="50%" valign="top">
       <img src="docs/screenshots/06-user.png" alt="User view" />
-      <p><b>Logged in as User.</b> A User can only read the table. There is no form and there are no buttons.</p>
+      <p><b>Logged in as User.</b> A User can only read the table.</p>
     </td>
   </tr>
   <tr>
     <td colspan="2">
       <img src="docs/screenshots/07-database.png" alt="Users table in the database" />
-      <p><b>The database.</b> Only password hashes are stored, never the real passwords. All five users have the same password, but because of the random salt their hashes are completely different.</p>
+      <p><b>The database.</b> Only password hashes are stored, plain text. Even if all users have the same password, their hashes will be different because of the salt.</p>
     </td>
   </tr>
 </table>
-
-## Glossary
-
-| Word           | Meaning                                                                       |
-|----------------|-------------------------------------------------------------------------------|
-| API            | The part of the server that the website talks to                              |
-| Endpoint       | One URL on the API, like `/api/users`                                         |
-| Authentication | Checking who you are (logging in)                                             |
-| Authorization  | Checking what you are allowed to do (your role)                               |
-| JWT            | A signed token that proves who you are and what role you have                 |
-| Claim          | One piece of information inside a JWT, like the role                          |
-| Hash           | A scrambled version of a password that can't be turned back                   |
-| Salt           | Random data added to a password before hashing                                |
-| Container      | A small, separate environment that runs one program with everything it needs  |
-
 
 ## CDS.infrastructure
 
