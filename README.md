@@ -16,24 +16,11 @@ Made with:
    - [Users](#users)
 3. [How to run it without Docker](#how-to-run-it-without-docker)
 4. [Roles](#roles)
-5. [The API](#the-api)
+5. [API](#api)
 6. [Project structure](#project-structure)
 7. [Security decisions](#security-decisions)
-   - [Authentication: who are you?](#authentication-who-are-you)
-   - [Authorization: what are you allowed to do?](#authorization-what-are-you-allowed-to-do)
-   - [Passwords](#passwords)
-   - [Secrets](#secrets)
-   - [Known limitations](#known-limitations)
 8. [Screenshots](#screenshots)
 9. [Glossary](#glossary)
-
-### CDS.infrastructure
-
-[TODO]
-
-### Final Reflection
-
-[TODO]
 
 # CD.security
 
@@ -41,56 +28,60 @@ Made with:
 
 ```mermaid
 flowchart LR
-    Browser -->|http://localhost:PORT | Client["client<br/>React + Bun"]
-    Client -->|/api requests| Server["server<br/>C# .NET"]
-    Server --> DB[("SQLite<br/>database")]
+    Browser -->|http://localhost:PORT | Client["Client<br/>React + Bun"]
+    Client -->|/api requests| Server["Server<br/>C# .NET"]
+    Server --> DB[("SQLite<br/>Database")]
 ```
 
 The project has two parts:
 
-- **client** is the website, written in React and TypeScript. Bun runs a small web server ([`client/src/index.ts`](client/src/index.ts)) that sends the website to the browser and passes every `/api/...` request on to the server.
-- **server** is the backend, a C# ASP.NET Core Web API. It checks logins, checks roles, and reads and writes users in a SQLite database (a database stored in a single file).
+- **Client**: The website (React + TypeScript + Bun)
+- **Server**: The backend (C# ASP.NET Core Web API + SQLite)
 
-Each part runs in its own **Docker container**. A container is like a small, separate computer that already has everything the program needs installed. **Docker Compose** ([`compose.yaml`](compose.yaml)) starts both containers with one command.
+### Docker
+- Each part runs in its own **Docker container**.
+- **Docker Compose** starts both containers with one command.
 
 ## How to run it
 
-You need [Docker](https://www.docker.com/) installed.
+You must install Docker and have it running. 
 
-**1. Create your `.env` file** from the example, then open it and change the [settings](#settings):
+1. Create your `.env` file from the example
 
 ```bash
 cp .env.example .env
 ```
 
-**2. Start everything**
+2. Start Docker Compose
 
 ```bash
 docker compose up -d --build
 ```
 
-**3. Open http://localhost:8001** and log in with one of the [users](#users).
+3. Open http://localhost:8001
 
 **To stop**
 
 ```bash
 docker compose down      # stop
+```
+
+**To stop and delete the database**
+```bash
 docker compose down -v   # stop and delete the database
 ```
 
 ### Settings
 
-These are the settings in `.env`:
+Settings in `.env`:
 
-| Setting         | What it does                                                            | Example       |
-|-----------------|-------------------------------------------------------------------------|---------------|
-| `JWT_KEY`       | A long random secret (at least 32 characters) used to sign login tokens | A random text |
-| `SEED_PASSWORD` | The password for the users created the first time                       | `password`    |
-| `SEED_USERS`    | `true` to also create the example users, `false` to only create `admin` | `true`        |
+| Setting         | What it does                                                           | Example     |
+|-----------------|------------------------------------------------------------------------|-------------|
+| `JWT_KEY`       | Random secret (at least 32 characters) used to sign login tokens       | Random text |
+| `SEED_PASSWORD` | The password that users will have                                      | `password`  |
+| `SEED_USERS`    | `true` will seed (create) demo users, `false` will only create `admin` | `true`      |
 
 ### Users
-
-The first time the app starts (when the database is empty), it creates these users. They all have the password from `SEED_PASSWORD`.
 
 | Username | Role      | Created when      |
 |----------|-----------|-------------------|
@@ -100,9 +91,7 @@ The first time the app starts (when the database is empty), it creates these use
 | Bent     | User      | `SEED_USERS=true` |
 | Gert     | User      | `SEED_USERS=true` |
 
-## How to run it without Docker
-
-This is useful while developing. You need the [.NET 10 SDK](https://dotnet.microsoft.com/) and [Bun](https://bun.sh/), and two terminals. It uses different ports than Docker, so you can run both at the same time.
+## How to run it without Docker (for development)
 
 **Terminal 1**: start the server on http://localhost:5000
 
@@ -120,29 +109,39 @@ bun run dev
 ```
 
 > [!NOTE]
-> When running this way, the server reads its settings from [`server/appsettings.Development.json`](server/appsettings.Development.json) instead of `.env`.
+> The server will read [`server/appsettings.Development.json`](server/appsettings.Development.json) instead of `.env`.
 
 ## Roles
 
-| Role      | Can read users | Can create, update and delete        |
-|-----------|----------------|--------------------------------------|
-| User      | Yes            | Nothing                              |
-| SuperUser | Yes            | Users with the User role             |
-| Admin     | Yes            | Everyone (Users, SuperUsers, Admins) |
+| Role      | Can read users | Can create, update and delete |
+|-----------|----------------|-------------------------------|
+| User      | Yes            | No                            |
+| SuperUser | Yes            | Users                         |
+| Admin     | Yes            | Users, SuperUsers, Admins     |
 
-## The API
+## API
 
-An **endpoint** is a URL on the server that the website can call. Each one uses an HTTP method that says what to do: `GET` reads, `POST` creates, `PUT` updates and `DELETE` deletes.
+HTTP methods:
+- `POST` Create
+- `GET` Read
+- `PUT` Update
+- `DELETE` Delete
 
-| Method   | Endpoint          | What it does        | Who can use it   |
-|----------|-------------------|---------------------|------------------|
-| `POST`   | `/api/login`      | Log in, get a token | Everyone         |
-| `GET`    | `/api/users`      | List all users      | All roles        |
-| `POST`   | `/api/users`      | Create a user       | SuperUser, Admin |
-| `PUT`    | `/api/users/{id}` | Update a user       | SuperUser, Admin |
-| `DELETE` | `/api/users/{id}` | Delete a user       | SuperUser, Admin |
+**Endpoints**
+
+| Method   | Endpoint          | What it does   | Who can use it   |
+|----------|-------------------|----------------|------------------|
+| `POST`   | `/api/login`      | Log in         | Everyone         |
+| `GET`    | `/api/users`      | List all users | All roles        |
+| `POST`   | `/api/users`      | Create user    | SuperUser, Admin |
+| `PUT`    | `/api/users/{id}` | Update user    | SuperUser, Admin |
+| `DELETE` | `/api/users/{id}` | Delete user    | SuperUser, Admin |
 
 You can try it from the terminal while the app is running in Docker (without Docker, use port 3000):
+
+To test the API, you can use `curl` or a browser.
+
+Use port 3000 when not using Docker.
 
 ```bash
 # Log in and get a token
@@ -154,78 +153,69 @@ curl -X POST http://localhost:8001/api/login \
 curl -i http://localhost:8001/api/users
 ```
 
-The server answers with a **status code** that says how it went:
+**Status code**
 
-| Code  | Meaning                                                                |
-|-------|------------------------------------------------------------------------|
-| `200` | OK                                                                     |
-| `204` | OK, but there is nothing to send back (used after deleting)            |
-| `400` | Bad request: something is missing, like the username                   |
-| `401` | Unauthorized: you are not logged in, or your login has expired         |
-| `403` | Forbidden: you are logged in, but your role is not allowed to do this  |
-| `404` | Not found: the user does not exist                                     |
-| `409` | Conflict: the username is already taken                                |
+| Code  | Meaning                                                        |
+|-------|----------------------------------------------------------------|
+| `200` | OK                                                             |
+| `204` | OK      |
+| `400` | Bad request           |
+| `401` | Unauthorized   |
+| `403` | Forbidden |
+| `404` | Not found                             |
+| `409` | Conflict                         |
 
 ## Project structure
 
 ```
 client/src/
-├── index.ts               Bun server: sends the website and forwards /api to the server
-├── index.html             The HTML page that React runs in
-├── main.tsx               Starts React
-├── App.tsx                Shows the login page or the users page
-├── api/api.ts             Functions that call the server, and saving the login in the browser
-├── pages/LoginPage.tsx    The login form
-├── pages/UsersPage.tsx    The users table, and the form to create and edit users
-└── styles/index.css       The styling
+├── index.ts               Bun server
+├── index.html             
+├── main.tsx               
+├── App.tsx                Shows the pages
+├── api/api.ts             API
+├── pages/LoginPage.tsx    Login form
+├── pages/UsersPage.tsx    Users table
+└── styles/index.css       Cascading Style Sheet
 
 server/
-├── Program.cs                       Startup: settings, database, token checking, first users
+├── Program.cs                       Startup
 ├── Controllers/AuthController.cs    POST /api/login
-├── Controllers/UsersController.cs   GET, POST, PUT and DELETE /api/users
-├── Models/User.cs                   The User table and the three roles
-├── Models/Dtos.cs                   The data sent to and from the API
-└── Data/AppDbContext.cs             The connection to the database
+├── Controllers/UsersController.cs   POST, GET, PUT and DELETE /api/users
+├── Models/User.cs                   User table and roles
+├── Models/Dtos.cs                   Data Transfer Objects
+└── Data/AppDbContext.cs             Database connection
 ```
 
 ## Security decisions
 
-A short overview. Each decision is explained below.
+| Topic          | Decision                                                   |
+|----------------|------------------------------------------------------------|
+| Authentication | Username and password with a JWT that expires after 1 hour |
+| Authorization  | Role is in JWT and checked on every request                |
+| Passwords      | Stored as a hash, using PBKDF2 with a random salt          |
+| Secrets        | Kept in `.env`, which is never committed to git            |
 
-| Topic          | Decision                                                            |
-|----------------|---------------------------------------------------------------------|
-| Authentication | Username and password, then a signed JWT that expires after 1 hour |
-| Authorization  | The role is in the JWT, and the server checks it on every request  |
-| Passwords      | Only stored as a hash, using PBKDF2 with a random salt              |
-| Secrets        | Kept in `.env`, which is never committed to git                    |
+### Authentication
 
-### Authentication: who are you?
-
-We use **JWTs** (JSON Web Tokens). A JWT is a small piece of text that says who you are and what role you have, signed with a secret key.
+We use **JWT** (JSON Web Tokens)
 
 ```mermaid
 sequenceDiagram
     participant B as Browser
     participant S as Server
     B->>S: POST /api/login (username + password)
-    S->>S: Check the password against the stored hash
+    S->>S: Check password against hash
     S-->>B: JWT (username + role, signed with JWT_KEY)
     B->>S: GET /api/users + "Authorization: Bearer <token>"
-    S->>S: Check the signature and the role
-    S-->>B: The list of users
+    S->>S: Checksignature and role
+    S-->>B: List of users
 ```
 
-1. The user types their username and password and the browser sends them to `POST /api/login`.
-2. The server finds the user and checks the password against the stored hash (see [Passwords](#passwords)).
-3. If it matches, the server creates a JWT with the username and role, signs it with `JWT_KEY`, and sends it back. The token stops working after 1 hour.
-4. The browser saves the token in `sessionStorage`, which is deleted when the tab is closed.
-5. Every later request sends the token in the `Authorization: Bearer <token>` header.
+The Token is signed with **HMAC-SHA256**
 
-The token is signed with **HMAC-SHA256**: the server mixes the token's content with the secret key to make a signature. If anyone changes the token, for example to give themselves the Admin role, the signature no longer matches and the server rejects it. Only someone with the secret key can make a valid token.
-
-If the username or the password is wrong, the error message is the same, so nobody can find out which usernames exist.
-
-The code is in [`AuthController.cs`](server/Controllers/AuthController.cs) (creating the token) and [`Program.cs`](server/Program.cs) (checking the token).
+- [`AuthController.cs`](server/Controllers/AuthController.cs) (create the token)
+- [`Program.cs`](server/Program.cs) (check the token).
 
 ### Authorization: what are you allowed to do?
 
