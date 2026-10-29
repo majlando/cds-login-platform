@@ -9,18 +9,20 @@ Made with:
 
 ## Table of Contents
 
-### CDS.security
+### *CDS.security*
 1. [How it works](#how-it-works)
 2. [How to run it](#how-to-run-it)
-   - [Settings](#settings)
-   - [Users](#users)
-3. [How to run it without Docker](#how-to-run-it-without-docker)
+3. [How to run it (without Docker)](#how-to-run-it-without-docker)
 4. [Roles](#roles)
 5. [API](#api)
 6. [Project structure](#project-structure)
 7. [Security decisions](#security-decisions)
 8. [Screenshots](#screenshots)
 9. [Glossary](#glossary)
+
+### *CDS.infrastructure*
+
+### *Final reflection*
 
 # CD.security
 
