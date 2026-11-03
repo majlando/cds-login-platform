@@ -15,9 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9429a093-08c0-402e-8f1a-dc87e164c660" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/README-infra-lab.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/screenshots/server-install.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-infrastructure.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-infrastructure.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README-infra-lab.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-infra-lab.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

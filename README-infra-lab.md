@@ -29,7 +29,7 @@ docker compose ps
 
 ### Testing
 
-Take screenshots of these
+Take screenshots of these:
 
 #### Server
 
