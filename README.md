@@ -24,7 +24,7 @@ Made with:
 10. [Subnetting](#subnetting)
 11. [Lab](#lab)
 
-### *Final reflection*
+### *The final reflections*
 12. [Final reflection](#final-reflection)
 
 
