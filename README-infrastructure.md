@@ -52,6 +52,13 @@ docker compose up -d --build
 docker compose ps
 ```
 
+#### Client
+**Setup client on VLAN 570 (Ubuntu Desktop)**
+
+- Address: x.x.x.x
+- Netmask: x.x.x.x
+- Gateway: x.x.x.x
+
 ### Testing
 
 Take screenshots of these
@@ -69,7 +76,7 @@ Take screenshots of these
 - ip a
 - ip route
 - curl -I http://x.x.x.x:8081/
-- Open http://x.x.x.x:8080/ in browser
+- Open http://x.x.x.x:8001/ in browser
 
 | **Ubuntu Server installed** | **Server IP settings**                               |
 |---|--------------------------------------------------------------|
