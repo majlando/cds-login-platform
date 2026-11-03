@@ -15,15 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9429a093-08c0-402e-8f1a-dc87e164c660" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/client-browser.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/client-curl.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/client-install.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/server-curl.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/server-docker.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/screenshots/server-ip.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-infra-lab.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-infrastructure.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README-final-reflection.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-final-reflection.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

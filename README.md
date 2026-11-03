@@ -20,8 +20,13 @@ Made with:
 8. [Screenshots](#screenshots)
 
 ### *CDS.infrastructure*
+9. [IP addressing plan](#ip-adressing-plan)
+10. [Subnetting](#subnetting)
+11. [Lab](#lab)
 
 ### *Final reflection*
+12. [Final reflection](#final-reflection)
+
 
 # CD.security
 
@@ -271,9 +276,9 @@ The JWT key and the password for the first users live in `.env`.
   </tr>
 </table>
 
-## CDS.infrastructure
+# CDS.infrastructure
 
-### IP adressing plan
+## IP adressing plan
 - Each VLAN has its own subnet
 - VLAN 5xx uses 10.5.xx.0 (for example VLAN 570 uses 10.5.70.0)
 - Gateway is x.x.x.1
@@ -291,7 +296,7 @@ The JWT key and the password for the first users live in `.env`.
 - Static: Used for servers, printers and network equipment.
 - DHCP: Used for clients, phones and guests.
 
-### Subnetting Examples
+## Subnetting
 
 |                  | VLAN 570 – Clients | VLAN 573 – Printers | 
 |------------------|---|---|
@@ -303,9 +308,9 @@ The JWT key and the password for the first users live in `.env`.
 - **Printers /28:** Today we have 3 printers, so we leave room for 14 usable addresses. |
 
 
-### Lab
+## Lab
 
-#### Ubuntu Server: 10.5.71.30
+### Ubuntu Server 10.5.71.30
 
 **Setting up the server**
 ```bash
@@ -331,7 +336,7 @@ docker compose ps
 ![App running on server](docs/screenshots/server-curl.png)
 
 
-#### Client
+### Client
 
 **Installing Ubuntu Desktop 26.04 LTS**
 
@@ -348,4 +353,23 @@ docker compose ps
 
 ## Final reflection
 
-[TODO]
+### How are security and infrastructure interconnected?
+- It is important that both the app and infrastructure are secure, because a hacker can exploit the weakest link.
+- Password is hashed, but we are using plain HTTP, so others on the network can read passwords.
+
+### What technical challenges did you encounter?
+- The Virtual Machine was extremely slow, we could hardly enter any commands.
+- The Docker deployment didn't go as smoothly as it could have.
+
+### What did you learn about deploying an application on a server?
+
+- Docker Compose allows to deploy multiple containers with a single command.
+- We had to create a new .env because it wasn't commited to git.
+- With a .env.example we could just copy it as .env
+
+### What would you do differently in a real company?
+
+- On a real server we would use HTTPS, so that passwords and tokens are encrypted.
+- Make it possible for users to create their own accounts, instead of having a shared password.
+- Add backup, monitoring and logging.
+- Add a firewall that only allows the required traffic to reach the servers.
