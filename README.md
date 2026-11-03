@@ -113,8 +113,7 @@ bun install
 bun run dev
 ```
 
-> [!NOTE]
-> The server will read [`server/appsettings.Development.json`](server/appsettings.Development.json) instead of `.env`.
+*The server will read [`server/appsettings.Development.json`](server/appsettings.Development.json) instead of `.env`.*
 
 ## Roles
 
@@ -356,10 +355,12 @@ docker compose ps
 ### How are security and infrastructure interconnected?
 - It is important that both the app and infrastructure are secure, because a hacker can exploit the weakest link.
 - Password is hashed, but we are using plain HTTP, so others on the network can read passwords.
+- The infrastructure should be designed with security in mind from the start.
 
 ### What technical challenges did you encounter?
 - The Virtual Machine was extremely slow, we could hardly enter any commands.
 - The Docker deployment didn't go as smoothly as it could have.
+- The network configuration was more complex than expected.
 
 ### What did you learn about deploying an application on a server?
 
