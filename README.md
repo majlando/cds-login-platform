@@ -324,14 +324,17 @@ docker compose ps
 **Ubuntu Server installed**
 
 ![Ubuntu Server installed](docs/screenshots/server-install.png)
+
 **Server IP**
 
 ![Ubuntu Server installed](docs/screenshots/server-ip.png)
+
 **docker compose up -d --build**
 
 ![Docker and the app running](docs/screenshots/server-docker.png)
 
 **App running on server**
+
 ![App running on server](docs/screenshots/server-curl.png)
 
 
