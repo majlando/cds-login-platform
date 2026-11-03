@@ -1,5 +1,7 @@
 # SDS.infrastucture
 
+*Merged with README.md when completed*
+
 ### IP adressing plan
 - Each VLAN has its own subnet
 - VLAN 5xx uses 10.5.xx.0 (for example VLAN 570 uses 10.5.70.0)
@@ -29,7 +31,16 @@
 - **Clients /24:** Today we have 25 clients and this is likely to grow, so we leave room for 254 usable adresses
 - **Printers /28:** Today we have 3 printers, so we leave room for 14 usable addresses.
 
-### Server
+### Lab
+
+#### Server
+
+| Setting | Value                   |
+|---|-------------------------|
+| Operating system | Ubuntu Server 24.04 LTS |
+| IP address | `10.5.71.10/24`, static |
+| Gateway | `10.5.71.1`             |
+| App port | **TCP 8001**            |
 
 **Setting up the server**
 ```bash
@@ -40,3 +51,32 @@ systemctl enable --now docker
 docker compose up -d --build
 docker compose ps
 ```
+
+### Testing
+
+Take screenshots of these
+
+#### Server
+
+- ip a
+- ip route
+- sudo docker compose ps
+- curl -I http://localhost:8001/
+
+
+#### Client
+
+- ip a
+- ip route
+- curl -I http://x.x.x.x:8081/
+- Open http://x.x.x.x:8080/ in browser
+
+| **Ubuntu Server installed** | **Server IP settings**                               |
+|---|--------------------------------------------------------------|
+| ![Ubuntu Server installed](docs/screenshots/server-install.png) | ![Server IP settings](docs/screenshots/server-ip.png)        |
+| **Docker and the app running** | **App answers on the server**                        |
+| ![Docker and the app running](docs/screenshots/server-docker.png) | ![App answers on the server](docs/screenshots/server-curl.png) |
+| **Client IP settings** | **Tests from the client**                                    |
+| ![Client IP settings](docs/screenshots/client-ip.png) | ![Client curl](docs/screenshots/client-curl.png)             |
+| **App used from the client** |                                                              |
+| ![App used from the client](docs/screenshots/client-browser.png) |                                                              |
