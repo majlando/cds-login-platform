@@ -96,7 +96,8 @@ Settings in `.env`:
 | Bent     | User      | `SEED_USERS=true` |
 | Gert     | User      | `SEED_USERS=true` |
 
-## How to run it without Docker (for development)
+## How to run it without Docker
+(for development)
 
 **Terminal 1**: start the server on http://localhost:5000
 
