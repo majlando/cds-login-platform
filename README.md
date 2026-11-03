@@ -351,7 +351,7 @@ docker compose ps
 ![App running client](docs/screenshots/client-browser.png)
 
 
-## Final reflection
+# Final reflection
 
 ### How are security and infrastructure interconnected?
 - It is important that both the app and infrastructure are secure, because a hacker can exploit the weakest link.
