@@ -245,7 +245,7 @@ The JWT key and the password for the first users live in `.env`.
 | Topic         | We use              | Alternative(s)       |                                                                                      |
 |---------------|---------------------|----------------------|--------------------------------------------------------------------------------------|
 | Password hash | PBKDF2              | Argon2id or bcrypt   | PBKDF2 is built into ASP.NET Core.                                                   |
-| Login state   | JWT                 | Server-side sessions | JWT needs to storage on the server                                                   |
+| Login state   | JWT                 | Server-side sessions | JWT is client side, it needs no server storage.                                      |
 | Transport     | HTTP                | HTTPS                | HTTPS encrypts passwords and tokens on the network. It should be used in production. |
 
 ## Screenshots
