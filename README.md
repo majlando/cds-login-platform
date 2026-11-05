@@ -7,6 +7,8 @@ Made with:
 - **C# .NET** 
 - **Docker**
 
+**GitHub repository:** https://github.com/majlando/cds-login-platform
+
 ## Table of Contents
 
 ### *CDS.security*
@@ -20,15 +22,18 @@ Made with:
 8. [Screenshots](#screenshots)
 
 ### *CDS.infrastructure*
-9. [IP addressing plan](#ip-adressing-plan)
+9. [IP addressing plan](#ip-addressing-plan)
 10. [Subnetting](#subnetting)
-11. [Lab](#lab)
+11. [Network diagram](#network-diagram)
+12. [Firewall and VLANs](#firewall-and-vlans)
+13. [Lab](#lab)
+14. [Challenges](#challenges)
 
 ### *The final reflections*
-12. [Final reflection](#final-reflection)
+15. [Final reflection](#final-reflection)
 
 
-# CD.security
+# CDS.security
 
 ## How it works
 
@@ -52,7 +57,7 @@ The project has two parts:
 
 You must install Docker and have it running. 
 
-1. Create your `.env` file from the example
+1. Create your `.env` file from the example, and change `JWT_KEY` and `SEED_PASSWORD`. The example values are public.
 
 ```bash
 cp .env.example .env
@@ -193,7 +198,7 @@ sequenceDiagram
     S->>S: Check password against hash
     S-->>B: JWT (username + role, signed with JWT_KEY)
     B->>S: GET /api/users + "Authorization: Bearer <token>"
-    S->>S: Checksignature and role
+    S->>S: Check signature and role
     S-->>B: List of users
 ```
 
@@ -214,11 +219,11 @@ You can see this in [`UsersController.cs`](server/Controllers/UsersController.cs
 
 ### Passwords
 
-- Passwords are never stored as plaintext We only store a **hash**.
+- Passwords are never stored as plaintext. We only store a **hash**.
 - We use ASP.NET Core's built-in `PasswordHasher`. It uses an algorithm called **PBKDF2** (with HMAC-SHA512) together with a random **salt**:
   - Hashing 100,000 times makes it slow on purpose. Guessing passwords takes a very long time.
   - Salt is random data added to each password before hashing. Two users with the same password still get different hashes.
-- When someone logs in, the password is compared with stored hash.
+- When someone logs in, the password is compared with the stored hash.
 
 Even if all five users have the same password, every hash will be different.
 
@@ -234,6 +239,14 @@ The JWT key and the password for the first users live in `.env`.
 
 - The Docker setup uses plain HTTP. On a real server we would use HTTPS, so that password and tokens can't be read by others on the network.
 - A JWT can't be cancelled. If a user is deleted, their token still works until it expires (at most 1 hour).
+
+### Alternatives
+
+| Topic         | We use              | Alternative(s)       |                                                                                      |
+|---------------|---------------------|----------------------|--------------------------------------------------------------------------------------|
+| Password hash | PBKDF2              | Argon2id or bcrypt   | PBKDF2 is built into ASP.NET Core.                                                   |
+| Login state   | JWT                 | Server-side sessions | JWT needs to storage on the server                                                   |
+| Transport     | HTTP                | HTTPS                | HTTPS encrypts passwords and tokens on the network. It should be used in production. |
 
 ## Screenshots
 
@@ -271,17 +284,20 @@ The JWT key and the password for the first users live in `.env`.
   <tr>
     <td colspan="2">
       <img src="docs/screenshots/07-database.png" alt="Users table in the database" />
-      <p><b>The database.</b> Only password hashes are stored, plain text. Even if all users have the same password, their hashes will be different because of the salt.</p>
+      <p><b>The database.</b> Only password hashes are stored, never the plaintext passwords. Even if all users have the same password, their hashes will be different because of the salt.</p>
     </td>
   </tr>
 </table>
 
 # CDS.infrastructure
 
-## IP adressing plan
+## IP addressing plan
+
+This is our proposal for the company's network. The lab differs in some places, as described below the table.
+
 - Each VLAN has its own subnet
 - VLAN 5xx uses 10.5.xx.0 (for example VLAN 570 uses 10.5.70.0)
-- Gateway is x.x.x.1
+- The proposed gateway is x.x.x.1
 
 | VLAN | Name | Network | Subnet Mask     | Gateway | Devices possible | Devices today                    | 
 |---|---|---|-----------------|---|-----------------:|----------------------------------|
@@ -293,8 +309,21 @@ The JWT key and the password for the first users live in `.env`.
 | 575 | Guest Wi-Fi | `10.5.75.0/24` | 255.255.255.0   | 10.5.75.1 |              254 | Visitors (dhcp)                  |
 | 576 | Management | `10.5.76.0/27` | 255.255.255.224 | 10.5.76.1 |               30 | Switches, access points (static) |
 
-- Static: Used for servers, printers and network equipment.
+- Static: Used for servers, printers, cameras and network equipment.
 - DHCP: Used for clients, phones and guests.
+
+**In the lab:** The server on VLAN 571 gets `10.5.71.30` from DHCP, and its gateway is `10.5.71.5`. This comes from the existing lab network and differs from the proposal above.
+
+### Why the network is segmented
+
+We don't put all devices on the same network, because they have different security needs:
+
+The devices is not on the same network, because they have different security needs.
+- If one device is compromised, the attacker can't directly reach devices in other VLANs.
+- Visitors' devices are not trusted, so they only get internet access.
+- Servers are separated from clients, so access can be limited to the ports that are needed.
+- Voice has its own VLAN, so it is easier to prioritize calls over other traffic.
+- Switches and access points can only be configured from their own network.
 
 ## Subnetting
 
@@ -304,22 +333,38 @@ The JWT key and the password for the first users live in `.env`.
 | Usable addresses | 2⁸ − 2 = **254** | 2⁴ − 2 = **14** |
 | Devices          | 25 | 3 |
 
-- **Clients /24:** Today we have 25 clients and this is likely to grow, so we leave room for 254 usable adresses
-- **Printers /28:** Today we have 3 printers, so we leave room for 14 usable addresses. |
+- **Clients /24:** Today we have 25 clients and this is likely to grow, so we leave room for 254 usable addresses.
+- **Printers /28:** Today we have 3 printers, so we leave room for 14 usable addresses.
 
+## Firewall and VLANs
+
+**Why are VLAN 570 and VLAN 571 separate networks?** 
+- Clients and servers have different security needs.
+**What is the role of the firewall?** 
+- The firewall sits between the networks and decides which traffic is allowed. 
+- Here it allows VLAN 570 to reach VLAN 571 on TCP ports 8000–8100.
+**Why allow only specific ports?** 
+- Every open port is a possible way in.
 
 ## Lab
 
 ### Ubuntu Server 10.5.71.30
 
+**Port choice: 8001**
+
+The firewall only allows TCP ports 8000–8100 from VLAN 570 to VLAN 571, so the port must be in that range. 
+We chose 8001.
+
 **Setting up the server**
 ```bash
-apt-get update
-apt-get install -y docker.io docker-compose-v2
+sudo apt-get update
+sudo apt-get install -y docker.io docker-compose-v2
+sudo systemctl enable --now docker
 git clone https://github.com/majlando/cds-login-platform
-systemctl enable --now docker
-docker compose up -d --build
-docker compose ps
+cd cds-login-platform
+cp .env.example .env
+sudo docker compose up -d --build
+sudo docker compose ps
 ```
 
 **Ubuntu Server installed**
@@ -328,7 +373,7 @@ docker compose ps
 
 **Server IP**
 
-![Ubuntu Server installed](docs/screenshots/server-ip.png)
+![Server IP configuration](docs/screenshots/server-ip.png)
 
 **docker compose up -d --build**
 
@@ -345,6 +390,17 @@ docker compose ps
 
 ![Installing Ubuntu Desktop](docs/screenshots/client-install.png)
 
+**Client IP configuration**
+
+| Setting         | Value                    |
+|-----------------|--------------------------|
+| Hostname        | `kvist-desktop`          |
+| Operating system| Ubuntu Desktop 26.04 LTS |
+| VLAN            | 570          |
+| Network         | `10.5.70.0/24`           |
+| Subnet mask     | `255.255.255.0`          |
+| Login platform  | `http://10.5.71.30:8001` |
+
 **Client curl**
 
 ![Client curl](docs/screenshots/client-curl.png)
@@ -353,6 +409,15 @@ docker compose ps
 
 ![App running client](docs/screenshots/client-browser.png)
 
+
+## Challenges
+
+| Challenge | How we resolved it |
+|---|---|
+| The virtual machine was very slow, and it was hard to enter commands. | We prepared the setup commands in a short list and ran them one at a time. |
+| Docker Compose wouldn't start on the server, because `.env` isn't in git and `JWT_KEY` was missing. | We created `.env` on the server from `.env.example`. |
+| The server's gateway is `10.5.71.5`, not `10.5.71.1` as in our IP plan. The server also gets its address from DHCP, while the plan uses static addresses for servers. | We checked the real configuration with `ip route` and kept the settings from the lab network. Our IP plan is a proposal for the company's network. |
+| We needed to test the connection between the VLANs | We tested from the client with `curl` to `10.5.71.30:8001` and then opened the login platform in a browser. |
 
 # Final reflection
 
@@ -370,11 +435,11 @@ docker compose ps
 
 - Docker Compose allows to deploy multiple containers with a single command.
 - We had to create a new .env because it wasn't commited to git.
-- With a .env.example we could just copy it as .env
+- `.env.example` shows which settings are needed, but its values must be changed, because the repository is public.
 
 ### What would you do differently in a real company?
 
 - On a real server we would use HTTPS, so that passwords and tokens are encrypted.
 - Make it possible for users to create their own accounts, instead of having a shared password.
 - Add backup, monitoring and logging.
-- Add a firewall that only allows the required traffic to reach the servers.
+- Narrow the firewall rule from TCP ports 8000–8100 to only the port the login platform uses.
