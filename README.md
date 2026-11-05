@@ -340,9 +340,11 @@ The devices is not on the same network, because they have different security nee
 
 **Why are VLAN 570 and VLAN 571 separate networks?** 
 - Clients and servers have different security needs.
+
 **What is the role of the firewall?** 
 - The firewall sits between the networks and decides which traffic is allowed. 
 - Here it allows VLAN 570 to reach VLAN 571 on TCP ports 8000–8100.
+
 **Why allow only specific ports?** 
 - Every open port is a possible way in.
 
