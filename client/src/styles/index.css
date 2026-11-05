@@ -3,6 +3,9 @@ body {
   max-width: 800px;
   margin: 40px auto;
   padding: 0 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
 }
 
 form {
@@ -15,6 +18,10 @@ form {
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
 }
 
 th,
@@ -22,12 +29,21 @@ td {
   border: 1px solid #ccc;
   padding: 6px 10px;
   text-align: left;
+  border-radius: 4px;
+  background-color: #fff;
 }
 
 td button {
   margin-right: 4px;
+  padding: 2px 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
 }
 
 .error {
   color: #b00020;
 }
+

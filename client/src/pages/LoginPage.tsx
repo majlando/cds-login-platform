@@ -22,7 +22,7 @@ export function LoginPage({ onLogin }: Props) {
 
   return (
     <main>
-      <h1>Log in</h1>
+      <h1>Kvist & Bjælke - Login</h1>
       <form onSubmit={submit}>
         <input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
         <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
