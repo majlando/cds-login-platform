@@ -15,8 +15,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9429a093-08c0-402e-8f1a-dc87e164c660" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cds-login-platform/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +31,11 @@
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -50,6 +55,10 @@
     <setting file="file://$PROJECT_DIR$/client/tsconfig.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Immediate Window" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -131,6 +140,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -138,7 +148,7 @@
     "cidr.known.project.marker": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Polish-Branch",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
@@ -147,7 +157,8 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2026.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external"
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2026.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected=".NET Project.Server">
@@ -214,6 +225,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1793043939763</updated>
+      <workItem from="1793930110546" duration="12694000" />
     </task>
     <servers />
   </component>
